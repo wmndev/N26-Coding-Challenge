@@ -47,10 +47,10 @@ when a Write lock is granted.
 
 ## Time Complexity
 
-###Inserting (POST /transactions)
+### Inserting (POST /transactions)
 Will take O(1) as it only put the valid transaction in to the container array (number of operations is constant)
 
-###Producing Statistics (GET /statistics)
+### Producing Statistics (GET /statistics)
 Will take O(1):
 a. Fetching valid TransactionStatisticsAggregator(s) - O(1) by default will iterate on 60 indices
 b. Calculate statistics from valid aggregator(s) - O(1) by default - maximum 60 aggregator(s)
@@ -71,17 +71,17 @@ Body:
 }
 
 Where:
-● amount - transaction amount
-● timestamp - transaction time in epoch in millis in UTC time zone (this is not current
+amount - transaction amount
+timestamp - transaction time in epoch in millis in UTC time zone (this is not current
 timestamp)
 Returns: Empty body with either 201 or 204.
-● 201 - in case of success
-● 204 - if transaction is older than 60 seconds
+201 - in case of success
+204 - if transaction is older than 60 seconds
 Where:
-● amount is a double specifying the amount
-● time is a long specifying unix time format in milliseconds
+amount is a double specifying the amount
+time is a long specifying unix time format in milliseconds
 
-###GET /statistics
+### GET /statistics
 It returns the statistic based on the transactions which happened in the last 60 seconds.
 
 Returns:
@@ -94,17 +94,17 @@ Returns:
 }
 
 Where:
-● sum is a double specifying the total sum of transaction value in the last 60 seconds
-● avg is a double specifying the average amount of transaction value in the last 60
+sum is a double specifying the total sum of transaction value in the last 60 seconds
+
+avg is a double specifying the average amount of transaction value in the last 60
 seconds
-● max is a double specifying single highest transaction value in the last 60 seconds
-● min is a double specifying single lowest transaction value in the last 60 seconds
-● count is a long specifying the total number of transactions happened in the last 60
+
+max is a double specifying single highest transaction value in the last 60 seconds
+
+min is a double specifying single lowest transaction value in the last 60 seconds
+
+count is a long specifying the total number of transactions happened in the last 60
 seconds
-Requirements
-For the rest api, the biggest and maybe hardest requirement is to make the GET /statistics
-execute in constant time and space. The best solution would be O(1). It is very recommended to
-tackle the O(1) requirement as the last thing to do as it is not the only thing which will be rated in
-the code challenge.
+
 
 
