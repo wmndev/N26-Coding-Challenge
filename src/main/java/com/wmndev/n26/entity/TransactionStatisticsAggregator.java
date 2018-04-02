@@ -38,16 +38,22 @@ public class TransactionStatisticsAggregator {
 	 * @param other the iterating TransactionStatisticsAggregator
 	 */
 	public void mergeToResult(TransactionStatistics result) {
-		result.setSum(result.getSum() + getTransactionStatistics().getSum());
-		result.setCount(result.getCount() + getTransactionStatistics().getCount());
-		result.setAvg(result.getSum() / result.getCount());
-		
-		if (result.getMin() > getTransactionStatistics().getMin()){
-			result.setMin(getTransactionStatistics().getMin());
+		try{
+			getLock().readLock().lock();
+			
+			result.setSum(result.getSum() + getTransactionStatistics().getSum());
+			result.setCount(result.getCount() + getTransactionStatistics().getCount());
+			result.setAvg(result.getSum() / result.getCount());
+			
+			if (result.getMin() > getTransactionStatistics().getMin()){
+				result.setMin(getTransactionStatistics().getMin());
+			}
+			if (result.getMax() < getTransactionStatistics().getMax()){
+				result.setMax(getTransactionStatistics().getMax());
+			}	
+		}finally {
+			getLock().readLock().unlock();
 		}
-		if (result.getMax() < getTransactionStatistics().getMax()){
-			result.setMax(getTransactionStatistics().getMax());
-		}		
 	}
 	
 	
