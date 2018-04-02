@@ -31,9 +31,13 @@ transactions aggregators. Each index in the array represents an individual inter
 Once an incoming transaction passes validation it follows the below scenario:
 1. A proper container index is calculated
 2. Accoridng to the above index, TransactionStatisticsAggregator is fetched from the container array and there are 3 options:
-  a. TransactionStatisticsAggregator is empty ?  - Aggregating the current transaction details.
-  b. TransactionStatisticsAggregator is out of date ?  Resetting aggregator and aggregating the current transaction details.
-  c. TransactionStatisticsAggregator is valid ? Adding and aggregating the current transaction details
+
+  (a) TransactionStatisticsAggregator is empty ?  - Aggregating the current transaction details.
+    
+  (b) TransactionStatisticsAggregator is out of date ?  Resetting aggregator and aggregating the
+  current transaction details.
+  
+  (c) TransactionStatisticsAggregator is valid ? Adding and aggregating the current transaction details
   
 #### Producing Statistics
 According to the current time, the container provides all valid TransactionStatisticsAggregator(s)
@@ -52,7 +56,9 @@ Will take O(1) as it only put the valid transaction in to the container array (n
 
 ### Producing Statistics (GET /statistics)
 Will take O(1):
+
 a. Fetching valid TransactionStatisticsAggregator(s) - O(1) by default will iterate on 60 indices
+
 b. Calculate statistics from valid aggregator(s) - O(1) by default - maximum 60 aggregator(s)
 
 ## Space Complexity
